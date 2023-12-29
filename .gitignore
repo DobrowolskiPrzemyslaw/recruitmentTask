@@ -1,0 +1,11 @@
+*.pyc
+*.pyo
+__pycache__/
+.pytest_cache/
+.vscode/
+.idea/
+.mypy_cache/
+junit.xml
+allure-results/
+*.log
+/venv/
