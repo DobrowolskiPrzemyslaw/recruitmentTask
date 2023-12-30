@@ -16,7 +16,7 @@ class DemoPage(BasePage):
     def open(self):
         super()._open_url(self.__url)
 
-    @allure.step("Clicking demo button")
+    @allure.step("Opening demo login page")
     def open_demo_login_page(self):
         super()._click(self.__demo_link)
         self.switch_tab()
