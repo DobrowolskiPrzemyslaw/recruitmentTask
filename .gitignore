@@ -9,3 +9,6 @@ junit.xml
 allure-results/
 *.log
 /venv/
+/allure_commend
+/allure_reports/
+/allure-report/

@@ -24,6 +24,10 @@ class LoginPage(BasePage):
     def get_notification_text(self) -> str:
         return super()._get_text(self.__notification)
 
+    @allure.step("Checking if notification is displayed")
+    def is_displayed_notification(self) -> bool:
+        return super()._is_displayed(self.__notification)
+
     @allure.step("Typing username: '{1}'")
     def type_username(self, username: str):
         super()._type(self.__username_field, username)
