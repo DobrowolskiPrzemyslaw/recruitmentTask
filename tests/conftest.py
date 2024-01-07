@@ -1,3 +1,4 @@
+import os
 import logging
 
 import allure
@@ -9,7 +10,12 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
-logging.basicConfig(handlers=[logging.FileHandler('test_log.txt'), logging.StreamHandler()], level=logging.INFO,
+
+parent_dir = os.path.dirname(os.getcwd())
+log_file_path = os.path.join(parent_dir, 'logs', 'test_log.txt')
+os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+
+logging.basicConfig(handlers=[logging.FileHandler('C:/Users/User/PycharmProjects/recruitmentTask/logs/test_log.txt'), logging.StreamHandler()], level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 @pytest.fixture(params=["chrome", "firefox"])
