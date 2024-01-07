@@ -1,3 +1,5 @@
+import logging
+
 import allure
 import pytest
 from allure_commons.types import AttachmentType
@@ -7,11 +9,14 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
+logging.basicConfig(handlers=[logging.FileHandler('test_log.txt'), logging.StreamHandler()], level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 @pytest.fixture(params=["chrome", "firefox"])
 def driver(request):
+    logging.getLogger().handlers[0].setFormatter(logging.Formatter(f'{request.node.name} - %(asctime)s - %(levelname)s - %(message)s'))
     browser = request.param
-    print(f"Creating {browser} driver")
+    logging.info(f"Creating {browser} driver")
     if browser == "chrome":
         desired_version = "120.0.6099.130"
         my_driver = webdriver.Chrome(service=Service(ChromeDriverManager(desired_version).install()))
@@ -26,5 +31,5 @@ def driver(request):
     yield my_driver
     if request.session.testsfailed != before_failed:
         allure.attach(my_driver.get_screenshot_as_png(), name="Test failed", attachment_type=AttachmentType.PNG)
-    print(f"Closing {browser} driver")
+    logging.info(f"Closing {browser} driver")
     my_driver.quit()

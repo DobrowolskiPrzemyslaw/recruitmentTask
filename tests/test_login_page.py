@@ -1,3 +1,5 @@
+import logging
+
 import allure
 import pytest
 
@@ -15,7 +17,8 @@ class TestLoginPages():
     @allure.title("Verify successful login with valid credentials")
     @allure.story("User should be able to log in with correct username and password")
     @allure.description("This tests case verifies that a user can successfully log in with valid credentials.")
-    def test_successful_login(self, driver):
+    def test_login_success(self, driver):
+        logging.info("Starting test_login_success")
         demo_page = DemoPage(driver)
         demo_page.open()
         demo_page.open_demo_login_page()
@@ -26,6 +29,7 @@ class TestLoginPages():
         assert dashboard_page.get_current_url == PageData.dashboard_page_url, assert_message.wrong_url
         assert dashboard_page.get_title == PageData.dashboard_page_title, assert_message.wrong_title
         assert login_page.is_displayed_notification() == False, assert_message.displayed_notification
+        logging.info("test_login_success passed")
 
     @pytest.mark.login
     @pytest.mark.negative
@@ -38,7 +42,8 @@ class TestLoginPages():
     @allure.title("Verify failed login with invalid credentials")
     @allure.story("User shouldn't be able to log in with incorrect username or password")
     @allure.description("This tests case verifies that a user cannot successfully log in with invalid credentials.")
-    def test_failed_login(self, driver, username, password, expected_url, expected_title, expected_notification):
+    def test_login_failure(self, driver, username, password, expected_url, expected_title, expected_notification):
+        logging.info("Starting test_login_failure")
         demo_page = DemoPage(driver)
         demo_page.open()
         demo_page.open_demo_login_page()
@@ -48,3 +53,4 @@ class TestLoginPages():
         assert login_page.get_current_url == expected_url, assert_message.wrong_url
         assert login_page.get_title == expected_title, assert_message.wrong_title
         assert login_page.get_notification_text() == expected_notification, assert_message.incorrectly_text_notification
+        logging.info("test_login_failure passed")

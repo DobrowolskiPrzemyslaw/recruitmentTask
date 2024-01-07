@@ -1,3 +1,5 @@
+import logging
+
 import allure
 import pytest
 
@@ -25,6 +27,7 @@ class TestLoginPages:
         4. Verify that the task has been added.
     """)
     def test_add_new_task_to_any_project(self, driver):
+        logging.info("Starting test_add_new_task_to_any_project")
         demo_page = DemoPage(driver)
         demo_page.open()
         demo_page.open_demo_login_page()
@@ -36,3 +39,4 @@ class TestLoginPages:
         AddTaskPage(driver).add_task(task_data.title, task_data.description, task_data.release_name, task_data.environment,
                                      task_data.version, task_data.priority, task_data.tag)
         assert TaskPage(driver).get_notification_text() == "Task successfully added!", AssertMessage().not_added_task
+        logging.info("test_add_new_task_to_any_project passed")
